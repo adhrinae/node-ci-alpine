@@ -17,11 +17,13 @@ RUN apk add --no-cache docker
     # Install Docker Compose
 RUN pip3 install docker-compose==${DOCKER_COMPOSE_VERSION}
     # Install Watchman
-RUN cd /tmp; curl -LO https://github.com/facebook/watchman/archive/v${WATCHMAN_VERSION}.tar.gz \
-    && tar xzf v${WATCHMAN_VERSION}.tar.gz; rm v${WATCHMAN_VERSION}.tar.gz \
-    && cd watchman-${WATCHMAN_VERSION} \
-    && ./autogen.sh; ./configure; make && make install \
-    && cd /tmp; rm -rf watchman-${WATCHMAN_VERSION} \
-    # Fix Yarn configuration
+RUN mkdir -p /usr/local/var/run/watchman
+ADD watchman-v2021.02.01.00-linux/bin/watchman /usr/local/bin/
+ADD watchman-v2021.02.01.00-linux/lib/libgflags.so.2.2 /usr/local/lib/
+ADD watchman-v2021.02.01.00-linux/lib/libglog.so.0 /usr/local/lib/
+RUN chmod 755 /usr/local/bin/watchman
+RUN chmod 2777 /usr/local/var/run/watchman
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+
 RUN npm config set scripts-prepend-node-path true \
     && yarn --version
