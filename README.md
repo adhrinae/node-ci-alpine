@@ -1,5 +1,5 @@
 Docker image optimized for a CI environment.
-Based on alpine linux & Node.js dubnium(10).
+Based on alpine linux & Node.js LTS(Currently 14).
 
 ## Pre-installed Packages
 
