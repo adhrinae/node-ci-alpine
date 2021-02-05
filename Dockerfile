@@ -1,4 +1,4 @@
-FROM node:12-alpine
+FROM node:14-alpine
 
 ENV AWS_CLI_VERSION 1.16.83
 ENV DOCKER_COMPOSE_VERSION 1.23.2
@@ -27,4 +27,4 @@ RUN set -ex \
     # Fix Yarn configuration
     && npm config set scripts-prepend-node-path true \
     && yarn --version
-RUN yarn global add cypress@latest
+
