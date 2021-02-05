@@ -22,8 +22,9 @@ RUN set -ex \
     && cd /tmp; curl -LO https://github.com/facebook/watchman/archive/v${WATCHMAN_VERSION}.tar.gz \
     && tar xzf v${WATCHMAN_VERSION}.tar.gz; rm v${WATCHMAN_VERSION}.tar.gz \
     && cd watchman-${WATCHMAN_VERSION} \
-    && ./autogen.sh; ./configure; make && make install \
+    && ./autogen.sh; ./configure --without-python  --without-pcre --enable-lenient; make && make install \
     && cd /tmp; rm -rf watchman-${WATCHMAN_VERSION} \
+    && watchman --version \
     # Fix Yarn configuration
     && npm config set scripts-prepend-node-path true \
     && yarn --version
